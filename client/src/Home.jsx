@@ -33,7 +33,7 @@ const Home = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:4003/paragraphs", {
+      const response = await axios.get("http://localhost:4010/paragraphs", {
         params: { status: "approved" },
       });
 
@@ -65,7 +65,7 @@ const Home = () => {
     if (newBlog.title.trim() && newBlog.content.trim()) {
       try {
         const newBlogContent = `${newBlog.title}: ${newBlog.content}`;
-        await axios.post("http://localhost:4003/paragraphs", {
+        await axios.post("http://localhost:4010/paragraphs", {
           content: newBlogContent,
         });
         fetchBlogs();

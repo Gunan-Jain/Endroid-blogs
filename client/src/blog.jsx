@@ -9,7 +9,7 @@ const Blog = () => {
   // Fetch pending paragraphs
   const fetchPendingParagraphs = async () => {
     try {
-      const response = await axios.get("http://localhost:4003/paragraphs", {
+      const response = await axios.get("http://localhost:4010/paragraphs", {
         params: { status: "pending" },
       });
       setPendingParagraphs(response.data);
@@ -21,13 +21,22 @@ const Blog = () => {
   // Approve paragraph
   const approveParagraph = async (id) => {
     try {
-      // Send the correct PUT request with the paragraph ID
-      await axios.put(`http://localhost:4003/paragraphs/${id}/approve`);
-
-      // Refresh pending paragraphs after approval
+      await axios.put(`http://localhost:4010/paragraphs/${id}/approve`);
       fetchPendingParagraphs();
     } catch (error) {
       console.error("Error approving paragraph:", error);
+    }
+  };
+
+  // Delete paragraph
+  const deleteParagraph = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4010/paragraphs/${id}`);
+      setPendingParagraphs(
+        pendingParagraphs.filter((paragraph) => paragraph._id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting paragraph:", error);
     }
   };
 
@@ -47,7 +56,19 @@ const Blog = () => {
           pendingParagraphs.map((paragraph) => (
             <div key={paragraph._id} className="paragraph-item">
               <p>{paragraph.content}</p>
-              <button onClick={() => approveParagraph(paragraph._id)}>Approve</button>
+              <button onClick={() => approveParagraph(paragraph._id)}>
+                Approve
+              </button>
+              <button
+                onClick={() => deleteParagraph(paragraph._id)}
+                style={{
+                  marginLeft: "10px",
+                  backgroundColor: "red",
+                  color: "white",
+                }}
+              >
+                Delete
+              </button>
             </div>
           ))
         ) : (

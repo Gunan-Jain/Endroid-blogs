@@ -6,7 +6,7 @@ import BlogManager from "../Components/BlogManager";
 import VideoManager from "../Components/VideoManager";
 import ThemeToggle from "../Components/Theme";
 import { useNavigate } from "react-router-dom";
-import ImageManager from "../Components/ImageManager";
+
 import axios from "axios";
 
 function Dashboard() {
@@ -17,7 +17,7 @@ function Dashboard() {
   // Fetch approved paragraphs
   const fetchApprovedParagraphs = async () => {
     try {
-      const response = await axios.get("http://localhost:4003/paragraphs", {
+      const response = await axios.get("http://localhost:4010/paragraphs", {
         params: { status: "approved" },
       });
       setApprovedParagraphs(response.data);
@@ -29,7 +29,7 @@ function Dashboard() {
   // Fetch total paragraphs
   const fetchTotalParagraphs = async () => {
     try {
-      const response = await axios.get("http://localhost:4003/paragraphs");
+      const response = await axios.get("http://localhost:4010/paragraphs");
       setTotalParagraphs(response.data.length);
     } catch (error) {
       console.error("Error fetching total paragraphs:", error);
@@ -41,7 +41,10 @@ function Dashboard() {
     fetchTotalParagraphs();
   }, []);
 
-  const progress = totalParagraphs > 0 ? (approvedParagraphs.length / totalParagraphs) * 100 : 0;
+  const progress =
+    totalParagraphs > 0
+      ? (approvedParagraphs.length / totalParagraphs) * 100
+      : 0;
 
   const handleNavigateToBlog = () => {
     console.log("Navigating to Blog Page");
@@ -58,11 +61,15 @@ function Dashboard() {
         <section className="stats">
           <div
             onClick={handleNavigateToBlog}
-            style={{ cursor: "pointer", maxWidth: "50vw", position: "relative" }}
+            style={{
+              cursor: "pointer",
+              maxWidth: "50vw",
+              position: "relative",
+            }}
           >
             {/* "Blogs" widget */}
             <Widget title="Blogs" />
-            
+
             {/* Circular progress bar displayed over the "Blogs" widget */}
             <div className="progress-bar-overlay">
               <div className="circle-progress-bar">
@@ -86,20 +93,17 @@ function Dashboard() {
                     transform="rotate(-90 40 40)"
                   />
                 </svg>
-                <div className="progress-text">{`${Math.round(progress)}%`}</div>
+                <div className="progress-text">{`${Math.round(
+                  progress
+                )}%`}</div>
               </div>
               <p>{`${approvedParagraphs.length} of ${totalParagraphs} blogs approved`}</p>
             </div>
           </div>
 
-          <Widget
-            title="Videos"
-            className="VideoButton"
-          />
+          <Widget title="Videos" className="VideoButton" />
         </section>
         <section className="management">
-          <ImageManager />
-
           <BlogManager />
           <VideoManager />
         </section>

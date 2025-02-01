@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "../Styles/BlogManager.css";
-
-// Importing Font Awesome icons
 import {
   FaUpload,
   FaBold,
@@ -14,21 +12,33 @@ import {
 function BlogManager() {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleSubmit = async () => {
-    if (blogTitle.trim() === "" || blogContent.trim() === "") {
-      alert("Please fill in both the title and the content fields.");
+    // Check if any of the fields are empty or if the image URL is not set
+    if (blogTitle.trim() === "" || blogContent.trim() === "" || !imageUrl) {
+      alert(
+        "Please fill in all fields if field are empty or click add blog again one time more if image is shown."
+      );
     } else {
       try {
         const response = await fetch("http://localhost:5000/blog", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: blogTitle, content: blogContent }),
+          body: JSON.stringify({
+            title: blogTitle,
+            content: blogContent,
+            imageUrl,
+          }),
         });
+
         if (response.ok) {
           alert("Blog added successfully!");
           setBlogTitle("");
           setBlogContent("");
+          setImage(null);
+          setImageUrl("");
         } else {
           alert("Failed to add blog.");
         }
@@ -81,9 +91,30 @@ function BlogManager() {
     }
   };
 
-  const handleImageUpload = () => {
-    alert("Upload image functionality goes here.");
-    // You can implement image uploading here
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      try {
+        const response = await fetch("http://localhost:5000/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        console.log(data); // Log the response for debugging
+        if (data.imageUrl) {
+          setImage(file);
+          setImageUrl(data.imageUrl); // Set the image URL properly
+        } else {
+          alert("Failed to upload image.");
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
   };
 
   return (
@@ -103,6 +134,8 @@ function BlogManager() {
           value={blogContent}
           onChange={(e) => setBlogContent(e.target.value)}
         ></textarea>
+        <input type="file" onChange={handleImageUpload} />
+        {imageUrl && <img src={imageUrl} alt="Uploaded" width="100" />}
         <button className="btn" onClick={handleSubmit}>
           Add Blog
         </button>

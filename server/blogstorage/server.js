@@ -21,6 +21,20 @@ const paragraphSchema = new mongoose.Schema({
 
 const Paragraph = mongoose.model('Paragraphs', paragraphSchema);
 
+// Route to delete a paragraph by ID
+app.delete('/paragraphs/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedParagraph = await Paragraph.findByIdAndDelete(id);
+    if (!deletedParagraph) {
+      return res.status(404).json({ message: "Paragraph not found" });
+    }
+    res.status(200).json({ message: "Paragraph deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting paragraph" });
+  }
+});
+
 // Route to add a new paragraph
 app.post('/paragraphs', async (req, res) => {
   const { content } = req.body;
@@ -63,6 +77,6 @@ app.put('/paragraphs/:id/approve', async (req, res) => {
 });
 
 // Start the server
-app.listen(4003, () => {
+app.listen(4010, () => {
   console.log("Server is running on port 4003");
 });
