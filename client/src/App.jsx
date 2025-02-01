@@ -12,8 +12,8 @@ import Login from "./Login.jsx";
 import Home from "./Home.jsx";
 import Blog from "./blog.jsx"; // Correctly capitalized import
 import Comment from "./comment.jsx";
-import FileUpload from "./fileupload.jsx";
-import Gallery from "./gallery.jsx";
+// import FileUpload from "./fileupload.jsx";
+// import Gallery from "./gallery.jsx";
 import Adminblog from "./Adminblog.jsx";
 function App() {
   // const cld = new Cloudinary({ cloud: { cloudName: "dnpaktlwa" } });
@@ -38,8 +38,8 @@ function App() {
           <Route path="/comment" element={<Comment />} />
           <Route path="/blog" element={<Blog />} />{" "}
           <Route path="adminblogs" element={<Adminblog />} />
-          <Route path="/files" element={<FileUpload />} />
-          <Route path="/gallery" element={<Gallery />} />
+          {/* <Route path="/files" element={<FileUpload />} />
+          <Route path="/gallery" element={<Gallery />} /> */}
           {/* Correct capitalization */}
         </Routes>
       </Router>
