@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../Styles/BlogManager.css";
-import {
-  FaUpload,
-  FaTrash,
-} from "react-icons/fa";
+import { FaUpload, FaTrash } from "react-icons/fa";
 
 function BlogManager() {
   const [blogTitle, setBlogTitle] = useState("");
@@ -162,8 +159,6 @@ function BlogManager() {
           value={blogTitle}
           onChange={(e) => setBlogTitle(e.target.value)}
         />
-
-      
 
         <textarea
           ref={contentRef}
