@@ -3,109 +3,66 @@ import "../styles/AdminPage.css";
 import "./Dashboard.css";
 import Widget from "../Components/widget";
 import BlogManager from "../Components/BlogManager";
-import VideoManager from "../Components/VideoManager";
-import ThemeToggle from "../Components/Theme";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 function Dashboard() {
-  const [approvedParagraphs, setApprovedParagraphs] = useState([]);
-  const [totalParagraphs, setTotalParagraphs] = useState(0);
+  const [blogs, setBlogs] = useState([]);
+  const [approvedBlogs, setApprovedBlogs] = useState(0);
   const navigate = useNavigate();
 
-  // Fetch approved paragraphs
-  const fetchApprovedParagraphs = async () => {
-    try {
-      const response = await axios.get("http://localhost:4010/paragraphs", {
-        params: { status: "approved" },
-      });
-      setApprovedParagraphs(response.data);
-    } catch (error) {
-      console.error("Error fetching approved paragraphs:", error);
-    }
-  };
-
-  // Fetch total paragraphs
-  const fetchTotalParagraphs = async () => {
+  
+  const fetchBlogs = async () => {
     try {
       const response = await axios.get("http://localhost:4010/paragraphs");
-      setTotalParagraphs(response.data.length);
+      setBlogs(response.data);
+      
+      const approvedCount = response.data.filter(blog => blog.approved).length;
+      setApprovedBlogs(approvedCount);
     } catch (error) {
-      console.error("Error fetching total paragraphs:", error);
+      console.error("Error fetching blogs:", error);
     }
   };
 
   useEffect(() => {
-    fetchApprovedParagraphs();
-    fetchTotalParagraphs();
+    fetchBlogs();
   }, []);
-
-  const progress =
-    totalParagraphs > 0
-      ? (approvedParagraphs.length / totalParagraphs) * 100
-      : 0;
 
   const handleNavigateToBlog = () => {
     console.log("Navigating to Blog Page");
     navigate("/blog");
   };
 
+  
+  const progress = blogs.length > 0 ? (approvedBlogs / blogs.length) * 100 : 0;
+
   return (
     <div className="admin-panel">
       <header className="admin-header">
         <h1>Admin Dashboard</h1>
-        <ThemeToggle />
       </header>
       <main className="admin-content">
         <section className="stats">
-          <div
-            onClick={handleNavigateToBlog}
-            style={{
-              cursor: "pointer",
-              maxWidth: "50vw",
-              position: "relative",
-            }}
-          >
-            {/* "Blogs" widget */}
+          <div className="widget-progress-container" onClick={handleNavigateToBlog}>
             <Widget title="Blogs" />
-
-            {/* Circular progress bar displayed over the "Blogs" widget */}
-            <div className="progress-bar-overlay">
-              <div className="circle-progress-bar">
-                <svg width="80" height="80" viewBox="0 0 80 80">
-                  <circle
-                    cx="40"
-                    cy="40"
-                    r="35"
-                    stroke="#444"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <circle
-                    cx="40"
-                    cy="40"
-                    r="35"
-                    stroke="#4caf50" // Green color for progress
-                    strokeWidth="4"
-                    fill="none"
-                    strokeDasharray={`${progress}, 100`}
-                    transform="rotate(-90 40 40)"
-                  />
-                </svg>
-                <div className="progress-text">{`${Math.round(
-                  progress
-                )}%`}</div>
-              </div>
-              <p>{`${approvedParagraphs.length} of ${totalParagraphs} blogs approved`}</p>
+            <div className="circular-progress">
+              <CircularProgressbar
+                value={progress}
+                text={`${approvedBlogs} / ${blogs.length}`}
+                styles={buildStyles({
+                  textSize: "17px",
+                  pathColor: "#00FF00",
+                  textColor:  "#FFFFFF",
+                  trailColor: " #FFFF00",
+                })}
+              />
             </div>
           </div>
-
-          <Widget title="Videos" className="VideoButton" />
         </section>
         <section className="management">
           <BlogManager />
-          <VideoManager />
         </section>
       </main>
     </div>

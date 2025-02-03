@@ -1,4 +1,4 @@
-/* General Reset */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -6,7 +6,7 @@ body {
     color: #333;
   }
   
-  /* Navbar */
+  
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -49,7 +49,7 @@ body {
     background: #c0392b;
   }
   
-  /* Main Content */
+
   .main-container {
     padding: 20px;
   }

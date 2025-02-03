@@ -5,7 +5,7 @@ import Video from "./assets/video.mp4";
 import { Link } from "react-router-dom";
 import { FaPlusCircle } from "react-icons/fa";
 import axios from "axios";
-import Comment from "./comment"; // Import the Comment component
+import Comment from "./comment"; 
 
 // Modal Component
 const Modal = ({ isOpen, closeModal, children }) => {
@@ -26,10 +26,10 @@ const Modal = ({ isOpen, closeModal, children }) => {
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState({ title: "", content: "" });
-  const [showForm, setShowForm] = useState(false); // Toggles the form
-  const [selectedBlog, setSelectedBlog] = useState(null); // To store selected blog for modal
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
-  const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false); // State to toggle comment section visibility
+  const [showForm, setShowForm] = useState(false); 
+  const [selectedBlog, setSelectedBlog] = useState(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false); 
 
   const fetchBlogs = async () => {
     try {
@@ -51,7 +51,7 @@ const Home = () => {
     }
   };
 
-  // Fetch blogs on component mount
+  
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -82,16 +82,16 @@ const Home = () => {
   const openModal = (blog) => {
     setSelectedBlog(blog);
     setIsModalOpen(true);
-    setIsCommentSectionOpen(false); // Ensure comments section is closed initially when modal opens
+    setIsCommentSectionOpen(false); 
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedBlog(null);
-    setIsCommentSectionOpen(false); // Ensure comments section is closed when modal is closed
+    setIsCommentSectionOpen(false); 
   };
 
-  // Toggle the comment section visibility
+  
   const toggleCommentSection = () => {
     setIsCommentSectionOpen((prevState) => !prevState);
   };
@@ -159,7 +159,8 @@ const Home = () => {
           <a href="#contact">Contact Us</a>
         </nav>
       </div>
-      {/* Main Content */}
+
+      
       <div className="main-content">
         <section className="video-section">
           <video autoPlay muted loop>
@@ -169,7 +170,7 @@ const Home = () => {
           <div className="overlay">Welcome to Endroid USA</div>
         </section>
 
-        {/* Blog Section */}
+  
         <section className="blog" id="blog">
           <h3>Latest Blog Posts</h3>
           <div className="blog-posts">
@@ -180,21 +181,20 @@ const Home = () => {
                   <p>{blog.content}</p>
                 </div>
                 <button onClick={() => openModal(blog)}>
-                  Read More and Comment
-                </button>
+                Share Your Thoughts   </button>
               </div>
             ))}
 
-            {/* Add Blog Icon */}
+            
             <div
               className="blog-post add-blog"
               onClick={() => setShowForm(!showForm)}
             >
-              <FaPlusCircle size={50} color="#fff" />
+              <FaPlusCircle size={70} color="#fff" />
               <p>Add New Blog</p>
             </div>
 
-            {/* Blog Form */}
+            
             {showForm && (
               <div className="blog-post">
                 <input
@@ -220,12 +220,20 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Modal for Viewing Full Blog and Adding Comments */}
+      
+        <section className="admin-blog">
+          <h2>Admin Blogs</h2>
+          <Adminblog />
+        </section>
+
+        
         <Modal isOpen={isModalOpen} closeModal={closeModal}>
           {selectedBlog && (
             <>
               <h2>{selectedBlog.title}</h2>
-              <p>{selectedBlog.content}</p>
+              <div className="blog-content">
+                <p>{selectedBlog.content}</p>
+              </div>
               {/* Toggle button for comments section */}
               <button onClick={toggleCommentSection}>
                 {isCommentSectionOpen ? "Hide Comments" : "Show Comments"}
@@ -252,23 +260,130 @@ const Home = () => {
           </div>
         </section>
 
-        {/* About Us Section */}
-        <section className="about" id="about">
-          <h3>About Us</h3>
-          <p>
-            Endroid USA is dedicated to providing cutting-edge security
-            solutions to homes and businesses. Our products are designed with
-            reliability, efficiency, and ease of use in mind, ensuring that your
-            safety is never compromised.
-          </p>
+        <section className="about-us">
+          <h2>About Us</h2>
+          <div className="about-container">
+            <div className="about-box" id="vision">
+              <h3>Our Vision</h3>
+              <p>
+                We strive to become the most trusted partner in terms of quality,
+                consistency, and up-gradation for the security services in this
+                industry. For that, we tend to improve our expertise in technology
+                and market. We strive to set the standards of encryption and safety
+                for this rising industry in the near future and make the trust of
+                our clients our foundation.
+              </p>
+            </div>
+            <div className="about-box" id="company">
+              <h3>Our Company</h3>
+              <p>
+                Established in 2008, DBS has been working for over 14 years as a
+                one-stop solution provider for commercial security systems. From
+                project consultation to post-sale services, our expert solutions
+                have helped numerous businesses protect their assets and premises.
+              </p>
+            </div>
+            <div className="about-box" id="client">
+              <h3>Our Clients</h3>
+              <p>
+                We cater to numerous industries and businesses, helping them
+                achieve high-quality, innovative, and reliable solutions. Our
+                clients include commercial businesses, educational institutions,
+                residential complexes, and government bodies.
+              </p>
+            </div>
+          </div>
         </section>
-
-        {/* Footer Section */}
+    
+    {/* Footer Section */}
+        <div class ="footer">
         <footer>
           <p>&copy; 2025 Endroid USA. All rights reserved.</p>
         </footer>
+        </div>
+
       </div>
     </>
+  );
+};
+
+const Adminblog = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/blog");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setBlogs(data);
+        setError("");
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
+  }, []);
+
+  const openModal = (blog) => {
+    setSelectedBlog(blog);
+    setIsModalOpen(true);
+    setIsCommentSectionOpen(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedBlog(null);
+    setIsCommentSectionOpen(false);
+  };
+
+  const toggleCommentSection = () => {
+    setIsCommentSectionOpen((prevState) => !prevState);
+  };
+
+  if (loading) return <div className="loading">Loading blogs...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
+
+  return (
+    <div className="blog-list-container">
+      <h1>Latest Blogs</h1>
+      <div className="blog-grid">
+        {blogs.map((blog) => (
+          <div
+            key={blog.id}
+            className="blog-card"
+            onClick={() => openModal(blog)}
+          >
+            <div class text>
+            <img src={blog.imageUrl} alt={blog.title} />
+            <h3>{blog.title}</h3>
+            <p>{blog.content}</p>
+          </div>
+          </div>
+        ))}
+      </div>
+
+      {selectedBlog && (
+        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+          <h2>{selectedBlog.title}</h2>
+          <p>{selectedBlog.content}</p>
+          <button onClick={toggleCommentSection}>
+            {isCommentSectionOpen ? "Hide Comments" : "Show Comments"}
+          </button>
+          {isCommentSectionOpen && <Comment blogId={selectedBlog.id} />}
+        </Modal>
+      )}
+    </div>
   );
 };
 

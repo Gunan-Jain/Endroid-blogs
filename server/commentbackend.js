@@ -6,17 +6,17 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = 5001;
 
-// Middleware
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// MongoDB Connection
+
 mongoose
   .connect("mongodb+srv://techno:techno12@blogstorage.lh2j9.mongodb.net/")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-// Comment Schema with Replies
+
 const replySchema = new mongoose.Schema({
   text: String,
   date: { type: Date, default: Date.now },
@@ -31,8 +31,8 @@ const commentSchema = new mongoose.Schema({
 
 const Comment = mongoose.model("Comment", commentSchema);
 
-// Routes
-// Fetch comments for a specific blog
+
+
 app.get("/comments/:blogId", async (req, res) => {
   const { blogId } = req.params;
   try {
@@ -43,7 +43,7 @@ app.get("/comments/:blogId", async (req, res) => {
   }
 });
 
-// Post a new comment for a specific blog
+
 app.post("/comments", async (req, res) => {
   const { text, blogId } = req.body;
   try {
@@ -55,7 +55,7 @@ app.post("/comments", async (req, res) => {
   }
 });
 
-// Add a reply to a comment
+
 app.post("/comments/:id/replies", async (req, res) => {
   const { id } = req.params;
   const { text } = req.body;
@@ -72,7 +72,7 @@ app.post("/comments/:id/replies", async (req, res) => {
   }
 });
 
-// Delete a comment
+
 app.delete("/comments/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -83,7 +83,6 @@ app.delete("/comments/:id", async (req, res) => {
   }
 });
 
-// Delete a reply
 app.delete("/comments/:commentId/replies/:replyId", async (req, res) => {
   const { commentId, replyId } = req.params;
   try {

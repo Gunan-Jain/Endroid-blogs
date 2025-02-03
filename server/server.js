@@ -6,10 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB Atlas
+
 mongoose.connect("mongodb+srv://gj809:gj809@employee.qqnli.mongodb.net/");
 
-// Blog Schema
 const blogSchema = new mongoose.Schema({
   title: String,
   content: String,
@@ -18,7 +17,7 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model("Blog", blogSchema);
 
-// API Endpoints
+
 app.post("/blogs", async (req, res) => {
   try {
     const blog = new Blog(req.body);
@@ -47,6 +46,6 @@ app.delete("/blogs/:id", async (req, res) => {
   }
 });
 
-// Start Server
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

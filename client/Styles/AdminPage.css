@@ -5,122 +5,96 @@
 	color: #fff;
 	min-height: 100vh;
 	padding: 20px;
-  }
-  
-  .admin-header {
+}
+
+.admin-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 20px;
-  }
-  
-  .admin-content {
+}
+
+.admin-content {
 	display: flex;
 	flex-direction: column;
 	gap: 30px;
-  }
-  
-  .stats {
+}
+
+.stats {
 	display: flex;
 	gap: 20px;
-  }
-  
-  .stats > div {
-	flex: 2; /* Blog content takes more space */
-  }
-  
-  .stats > div:last-child {
-	flex: 1; /* Video container takes less space */
-  }
-  
-  .blog-container {
-	background-color: #2e2e3f;
-	border-radius: 10px;
-	padding: 15px;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-  }
-  
-  .blog-toolbar {
+}
+
+.blog-toolbar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 10px 0;
 	border-bottom: 1px solid #444;
-  }
-  
-  .blog-toolbar i {
+}
+
+.blog-toolbar i {
 	font-size: 18px;
-	margin-right: 15px;
+	margin-right: 10px;
 	cursor: pointer;
 	color: green;
-  }
-  
-  .blog-toolbar i:hover {
+}
+
+.blog-toolbar i:hover {
 	color: #238b3a;
-  }
-  
-  .blog-content {
-	flex: 1;
-	min-height: 200px;
-	padding: 10px;
-	border: 1px solid #444;
+}
+
+.uploaded-blogs {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.blog-item {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	background-color: #2e2e3f;
+	border-radius: 10px;
+	padding: 15px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 800px;
+}
+
+.blog-item img {
+	width: 150px; 
+	height: 120px;
+	object-fit: cover;
 	border-radius: 8px;
-	background-color: #1e1e2f;
+}
+
+.blog-details {
+	flex: 1;
 	color: #ccc;
-	overflow-y: auto;
-  }
-  
-  h1 {
+	word-wrap: break-word;
+}
+
+h1 {
 	color: white;
-  }
-  .widget-container {
+}
+
+.widget-container {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	position: relative;
-  }
-  
- /* Styles for the circular progress bar */
+}
+
 .progress-bar-overlay {
-	position: absolute;
-	top: 40%;
-	left: 80%;
-	transform: translate(-50%, -50%);
-	text-align: center;
-	
-  }
-  
-  .circle-progress-bar {
-	position: relative;
-	width: 80px;
-	height: 70px;
-  }
-  
-  .progress-text {
-	position: absolute;
-	top: 60%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 16px;
-	font-weight: bold;
-	color: #fff;
-  }
-  
-  .progress-bar {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-  }
-  /* Adjust the size of the Widget for Blogs and Videos */
+	display: none;
+}
+
+
 .widget {
-	width: 250px; /* Increase width */
-	height: 200px; /* Increase height */
-	padding: 20px;
+	width: 250px;
+	height: 200px;
+	padding: 15px;
 	border-radius: 10px;
 	background-color: #f4f4f4;
 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -129,37 +103,38 @@
 	justify-content: space-between;
 	position: relative;
 	transition: all 0.3s ease-in-out;
-  }
-  
-  .widget .title {
-	font-size: 1.5rem; /* Increase font size */
+}
+
+.widget .title {
+	font-size: 1.2rem;
 	font-weight: bold;
-  }
-  
-  .widget .value {
-	font-size: 2rem; /* Increase font size */
+}
+
+.widget .value {
+	font-size: 1.8rem;
 	font-weight: 600;
-  }
-  
-  .widget .description {
-	font-size: 1rem;
+}
+
+.widget .description {
+	font-size: 0.9rem;
 	color: #555;
-  }
-  
-  /* Specifically target Blogs and Videos */
-  .stats .widget {
+}
+
+.stats .widget {
 	flex: 1;
 	margin: 10px;
-  }
-  /* Blog Page Styles */
+}
+
+
 .admin-content h2 {
-	font-size: 2rem;
+	font-size: 1.8rem;
 	font-weight: bold;
 	color: #fff;
 	margin-bottom: 20px;
-  }
-  
-  .paragraph-item {
+}
+
+
+.paragraph-item {
 	background-color: #2e2e3f;
 	border-radius: 10px;
 	padding: 15px;
@@ -168,16 +143,34 @@
 	flex-direction: column;
 	gap: 10px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .paragraph-item p {
+	width: 100%;
+	max-width: 800px;
+}
+
+.widget-progress-container {
+	display: flex;
+	align-items: center;
+	gap: 40px; 
+	cursor: pointer;
+	position: relative;
+}
+
+.circular-progress {
+	width: 180px; 
+	height: 140px;
+	position: relative;
+	right: -349px; 
+	bottom: 50px;
+}
+
+.paragraph-item p {
 	font-size: 1rem;
 	color: #ccc;
 	margin-bottom: 10px;
 	line-height: 1.5;
-  }
-  
-  .paragraph-item button {
+}
+
+.paragraph-item button {
 	align-self: flex-start;
 	background-color: #238b3a;
 	color: white;
@@ -187,21 +180,12 @@
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-  }
-  
-  .paragraph-item button:hover {
+}
+
+.paragraph-item button:hover {
 	background-color: #1f752a;
-  }
-  
-  .paragraph-item button:focus {
-	outline: none;
-  }
-  
-  /* Make sure the paragraph-item button looks good on hover */
-  .paragraph-item button:active {
+}
+
+.paragraph-item button:active {
 	transform: scale(0.98);
-  }
-  
- 
-  
-  
+}

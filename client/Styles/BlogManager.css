@@ -43,7 +43,7 @@
 	color: white;
   }
   
-  /* Ensure the toolbar is at the bottom of the content */
+  
   .blog-form {
 	display: flex;
 	flex-direction: column;
@@ -55,7 +55,7 @@
 	display: flex;
 	justify-content: flex-start;
 	gap: 15px;
-	margin-top: auto; /* Makes sure toolbar stays at the bottom */
+	margin-top: auto; 
   }
   
   .icon {

@@ -2,11 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import "../Styles/BlogManager.css";
 import {
   FaUpload,
-  FaBold,
-  FaItalic,
-  FaAlignLeft,
-  FaAlignCenter,
-  FaAlignRight,
   FaTrash,
 } from "react-icons/fa";
 
@@ -168,23 +163,7 @@ function BlogManager() {
           onChange={(e) => setBlogTitle(e.target.value)}
         />
 
-        <div className="formatting-toolbar">
-          <button onClick={() => handleTextFormat("bold")}>
-            <FaBold />
-          </button>
-          <button onClick={() => handleTextFormat("italic")}>
-            <FaItalic />
-          </button>
-          <button onClick={() => handleTextFormat("alignLeft")}>
-            <FaAlignLeft />
-          </button>
-          <button onClick={() => handleTextFormat("alignCenter")}>
-            <FaAlignCenter />
-          </button>
-          <button onClick={() => handleTextFormat("alignRight")}>
-            <FaAlignRight />
-          </button>
-        </div>
+      
 
         <textarea
           ref={contentRef}

@@ -6,7 +6,7 @@ import ThemeToggle from "../Components/Theme";
 const Blog = () => {
   const [pendingParagraphs, setPendingParagraphs] = useState([]);
 
-  // Fetch pending paragraphs
+ 
   const fetchPendingParagraphs = async () => {
     try {
       const response = await axios.get("http://localhost:4010/paragraphs", {
@@ -18,7 +18,7 @@ const Blog = () => {
     }
   };
 
-  // Approve paragraph
+
   const approveParagraph = async (id) => {
     try {
       await axios.put(`http://localhost:4010/paragraphs/${id}/approve`);
@@ -28,7 +28,7 @@ const Blog = () => {
     }
   };
 
-  // Delete paragraph
+ 
   const deleteParagraph = async (id) => {
     try {
       await axios.delete(`http://localhost:4010/paragraphs/${id}`);
@@ -47,8 +47,8 @@ const Blog = () => {
   return (
     <div className="admin-panel">
       <header className="admin-header">
-        <h1>Admin Panel</h1>
-        <ThemeToggle />
+        <h1>Admin Dashboard</h1>
+       
       </header>
       <main className="admin-content">
         <h2>Pending Paragraphs</h2>

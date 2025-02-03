@@ -1,11 +1,11 @@
 .management {
-    display: flex; /* Or grid */
-    flex-direction: column; /* Stack vertically */
-    gap: 20px; /* Add space between components */
-    margin-top: 20px; /* Optional: Add space above */
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    margin-top: 20px; 
   }
   
   .management > * {
-    margin-bottom: 20px; /* Ensures space if gap doesn't apply */
+    margin-bottom: 20px; 
   }
   

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Adminblog.css";
-import CommentSection from "./comment"; // Import your comment component
-import Modal from "./Modal"; // Make sure you have a Modal component
+import CommentSection from "./comment"; 
+import Modal from "./Modal"; 
 
 function Adminblog() {
   const [blogs, setBlogs] = useState([]);

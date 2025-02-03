@@ -4,9 +4,9 @@ import axios from "axios";
 const CommentSection = ({ blogId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [replies, setReplies] = useState({}); // Object to store reply text for each comment
+  const [replies, setReplies] = useState({}); 
 
-  // Fetch all comments for a specific blog
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -22,12 +22,12 @@ const CommentSection = ({ blogId }) => {
     fetchComments();
   }, [blogId]);
 
-  // Handle new comment input
+
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
-  // Add a new comment
+
   const handleAddComment = async () => {
     if (newComment.trim()) {
       try {
@@ -36,7 +36,7 @@ const CommentSection = ({ blogId }) => {
           text: newComment,
         });
         setNewComment("");
-        // Refetch comments after adding
+    
         const response = await axios.get(
           `http://localhost:5001/comments/${blogId}`
         );
@@ -47,16 +47,16 @@ const CommentSection = ({ blogId }) => {
     }
   };
 
-  // Handle reply text change for a specific comment
+
   const handleReplyChange = (commentId, e) => {
     setReplies({
       ...replies,
-      [commentId]: e.target.value, // Update the reply text for the specific comment
+      [commentId]: e.target.value, 
     });
   };
 
   const handleAddReply = async (commentId) => {
-    const replyText = replies[commentId]; // Get the reply text for the specific comment
+    const replyText = replies[commentId];
     if (replyText.trim()) {
       try {
         const response = await axios.post(
@@ -66,14 +66,14 @@ const CommentSection = ({ blogId }) => {
         setComments(
           comments.map((c) => (c._id === commentId ? response.data : c))
         );
-        setReplies({ ...replies, [commentId]: "" }); // Clear the reply input for that comment
+        setReplies({ ...replies, [commentId]: "" }); 
       } catch (error) {
         console.error("Error adding reply:", error);
       }
     }
   };
 
-  // Toggle replies visibility for a specific comment
+  
   const handleShowReplies = (commentId) => {
     setComments(
       comments.map((comment) =>
@@ -84,7 +84,7 @@ const CommentSection = ({ blogId }) => {
     );
   };
 
-  // Delete a comment
+
   const handleDeleteComment = async (commentId) => {
     try {
       await axios.delete(`http://localhost:5001/comments/${commentId}`);
@@ -94,7 +94,7 @@ const CommentSection = ({ blogId }) => {
     }
   };
 
-  // Delete a reply
+ 
   const handleDeleteReply = async (commentId, replyId) => {
     try {
       const response = await axios.delete(
@@ -142,7 +142,7 @@ const CommentSection = ({ blogId }) => {
           <div>
             <input
               type="text"
-              value={replies[comment._id] || ""} // Use the reply text for this specific comment
+              value={replies[comment._id] || ""} 
               onChange={(e) => handleReplyChange(comment._id, e)}
               placeholder="Write a reply..."
             />

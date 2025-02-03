@@ -7,13 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
+
 mongoose
   .connect("mongodb+srv://techno:techno12@blogstorage.lh2j9.mongodb.net/")
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('Connection error:', err));
 
-// Schema and Model
+
 const paragraphSchema = new mongoose.Schema({
   content: { type: String, required: true },
   status: { type: String, default: "pending", enum: ["pending", "approved"] },
@@ -21,7 +21,7 @@ const paragraphSchema = new mongoose.Schema({
 
 const Paragraph = mongoose.model('Paragraphs', paragraphSchema);
 
-// Route to delete a paragraph by ID
+
 app.delete('/paragraphs/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,7 +35,7 @@ app.delete('/paragraphs/:id', async (req, res) => {
   }
 });
 
-// Route to add a new paragraph
+
 app.post('/paragraphs', async (req, res) => {
   const { content } = req.body;
   const newParagraph = new Paragraph({ content });
@@ -48,9 +48,9 @@ app.post('/paragraphs', async (req, res) => {
 });
 
 app.get('/paragraphs', async (req, res) => {
-  const { status } = req.query; // Check query for filtering
+  const { status } = req.query; 
   try {
-    const filter = status ? { status } : {}; // Filter by status if provided
+    const filter = status ? { status } : {}; 
     const paragraphs = await Paragraph.find(filter);
     res.status(200).json(paragraphs);
   } catch (err) {
@@ -58,7 +58,7 @@ app.get('/paragraphs', async (req, res) => {
   }
 });
 
-// Route to approve a paragraph by ID
+
 app.put('/paragraphs/:id/approve', async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,7 +76,7 @@ app.put('/paragraphs/:id/approve', async (req, res) => {
   }
 });
 
-// Start the server
+
 app.listen(4010, () => {
   console.log("Server is running on port 4003");
 });
